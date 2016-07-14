@@ -133,6 +133,8 @@
             .attr("class", "tooltip")
             .style("opacity", 0);
 
+    var area_g = svg
+            .append("g");
 
     svg.append('g')
             .attr({
@@ -159,6 +161,32 @@
             }).call(yGrid);
 
 
+    var createGradient=function(svg,color1,color2,id){
+
+        var defs = svg.append("defs");
+
+        var gradient=defs.append("linearGradient")
+                .attr("id", id)
+                .attr("x1", "0%")
+                .attr("y1", "100%")
+                .attr("x2", "0%")
+                .attr("y2", "0%")
+                .attr("spreadMethod", "pad");
+
+        gradient.append("svg:stop")
+                .attr("offset", "0%")
+                .attr("stop-color", color1)
+                .attr("stop-opacity", 1);
+
+        gradient.append("svg:stop")
+                .attr("offset", "100%")
+                .attr("stop-color", color2)
+                .attr("stop-opacity", 1);
+    };
+
+    createGradient(svg,'#fff','#CBFFDA','line111');
+    createGradient(svg,'#fff','#FFDCD4','line211');
+    createGradient(svg,'#fff','#C7D1FF','line311');
 
 
     function plotLine(d,d1,className,cirClass,attr){
@@ -183,6 +211,18 @@
                     return y(d.val);
                 });
 
+        var area = d3.svg.area()
+                .interpolate("cardinal")
+                .x(function (d) {
+                    return x(d.Year);
+                })
+                .y0(h)
+                .y1(function (d) {
+                    return y(d.val);
+                });
+
+
+
         svg.append('path')
                 .datum(d)
                 .attr({
@@ -196,6 +236,8 @@
                     class: className,
                     d: line
                 });
+
+
 
 
 
@@ -231,6 +273,18 @@
                     d3.select('.'+className+"0").style("opacity", 1);
 
 
+                    area_g.append('path')
+                        .datum(d1)
+                        .attr({
+                            class: className+'11',
+                            d: area,
+                            fill:'url(#'+className+'11)'
+                        })
+                        .style({
+                            opacity:.5
+                        });
+
+
                 })
                 .on("mouseout", function(d) {
                     div.transition()
@@ -250,6 +304,7 @@
                     d3.select('.'+className+"0").style("opacity", 0);
 
                     div.classed(className+"_tt",false);
+                    area_g.select('.'+className+'11').remove();
 
                 });
 
