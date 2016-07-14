@@ -129,8 +129,16 @@
             .append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    var div = d3.select("body").append("div")
-            .attr("class", "tooltip")
+    var div_line1 = d3.select("body").append("div")
+            .attr("class", "line1_tt")
+            .style("opacity", 0);
+
+    var div_line2 = d3.select("body").append("div")
+            .attr("class", "line2_tt")
+            .style("opacity", 0);
+
+    var div_line3 = d3.select("body").append("div")
+            .attr("class", "line3_tt")
             .style("opacity", 0);
 
     var area_g = svg
@@ -187,6 +195,7 @@
     createGradient(svg,'#fff','#CBFFDA','line111');
     createGradient(svg,'#fff','#FFDCD4','line211');
     createGradient(svg,'#fff','#C7D1FF','line311');
+   
 
 
     function plotLine(d,d1,className,cirClass,attr){
@@ -249,10 +258,14 @@
                 .attr("cx", function (d,i) { return x(d.Year); } ) //set x
                 .attr("r", 4)
                 .on("mouseover", function(d) {
+                    var div=d3.select('.'+className+'_tt');
+
+
+
                     div.transition()
                             .duration(200)
                             .style("opacity", .9);
-                    div.classed(className+"_tt",true);
+                    //div.classed(className+"_tt",true);
                     div.html("<b>Year : </b>"+d.Year + "<br/>" +"<b>Temp : </b>" + d.val+"F")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 50) + "px");
@@ -287,8 +300,10 @@
 
                 })
                 .on("mouseout", function(d) {
+
+                    var div=d3.select('.'+className+'_tt');
                     div.transition()
-                            .duration(500)
+                            .duration(200)
                             .style("opacity", 0);
                     $(event.target).attr("r", 4);
 
@@ -303,7 +318,7 @@
 
                     d3.select('.'+className+"0").style("opacity", 0);
 
-                    div.classed(className+"_tt",false);
+                    //div.classed(className+"_tt",false);
                     area_g.select('.'+className+'11').remove();
 
                 });

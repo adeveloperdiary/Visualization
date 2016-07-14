@@ -125,30 +125,45 @@ body {
 
 }
 
-div.tooltip {
+div.line1_tt {
     position: absolute;
     text-align: center;
     width: 100px;
     height: 38px;
     padding: 5px;
     font: 12px sans-serif;
-    -background: #c8e5fa;
+    background: #abd6b6;
     border: 0px;
     pointer-events: none;
     border-radius: 2px;
     color:#000000;
 }
 
-
-.line1_tt{
-    background: #abd6b6;
-}
-
-.line2_tt{
+div.line2_tt {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 38px;
+    padding: 5px;
+    font: 12px sans-serif;
     background: #fbc4ba;
+    border: 0px;
+    pointer-events: none;
+    border-radius: 2px;
+    color:#000000;
+}
+div.line3_tt {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 38px;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: #b2c3ff;
+    border: 0px;
+    pointer-events: none;
+    border-radius: 2px;
+    color:#000000;
 }
 
-.line3_tt{
-    background: #b2c3ff;
-}
 
