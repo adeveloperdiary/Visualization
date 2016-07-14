@@ -210,7 +210,8 @@
                     div.transition()
                             .duration(200)
                             .style("opacity", .9);
-                    div	.html("<b>Year : </b>"+d.Year + "<br/>" +"<b>Temp : </b>" + d.val+"F")
+                    div.classed(className+"_tt",true);
+                    div.html("<b>Year : </b>"+d.Year + "<br/>" +"<b>Temp : </b>" + d.val+"F")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 50) + "px");
                     d3.select(event.target).attr("r", 7);
@@ -247,6 +248,8 @@
                     d3.selectAll('.dot3').style("opacity", 1);
 
                     d3.select('.'+className+"0").style("opacity", 0);
+
+                    div.classed(className+"_tt",false);
 
                 });
 

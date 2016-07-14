@@ -132,8 +132,22 @@ div.tooltip {
     height: 38px;
     padding: 5px;
     font: 12px sans-serif;
-    background: #c8e5fa;
+    -background: #c8e5fa;
     border: 0px;
     pointer-events: none;
     border-radius: 2px;
+    color:#000000;
+}
+
+
+.line1_tt{
+    background: #abd6b6;
+}
+
+.line2_tt{
+    background: #fbc4ba;
+}
+
+.line3_tt{
+    background: #b2c3ff;
 }
