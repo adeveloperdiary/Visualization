@@ -11,6 +11,7 @@
     <script src='http://d3js.org/d3.v3.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
     <script src="js/d3.js"></script>
+    <script type='text/javascript' src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <style>
 
         .node circle{
@@ -24,7 +25,13 @@
         }
 
         .node text {
-            font: 10px helvetica;
+            font-size: 10px;
+
+        }
+
+        .d3-tip {
+            line-height: 1;
+            color: #222D3A;
 
         }
 
@@ -36,7 +43,7 @@
     <div class="header">Social network of friendships (34 Friends)
 
         <div style="font-size: 15px;line-height: 20px;color:#666">( Social network of friendships between 34 members of a karate club at a US university in the 1970 )</div>
-        <div style="font-size: 15px;line-height: 40px;color:darkred">1.Drag Enabled 2.Double Click to Highlight the links for any node</div>
+        <div style="font-size: 15px;line-height: 40px;color:darkred">1.Drag Enabled 2.Double Click on Node to Highlight the links/Vertices for it</div>
 
     </div>
 
@@ -45,7 +52,7 @@
 </div>
 
 
-<body>
+
 
 <script>
 
@@ -56,8 +63,8 @@
     };
 
     //Constants for the SVG
-    var width = 950,
-            height = 400;
+    var width = 650,
+            height = 450;
 
     //Set up the colour scale
     var color = d3.scale.category20();
@@ -102,17 +109,55 @@
      .call(force.drag);*/
 
 
+    var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function (d) {
+                var i=0;
+                graph.links.forEach(function(d1){
+                    if(d1.target==d){
+                        i++
+                    }
+                    if(d1.source==d){
+                        i++
+                    }
+
+                });
+                return  "<div style='background-color: #8bbbff;padding:10px;border-radius: 5px'>"+i + " Links</div>";
+            });
+
+    svg.call(tip);
+
+
     var node = svg.selectAll(".node")
             .data(graph.nodes)
             .enter().append('g')
             .attr('class', 'node')
             .call(force.drag)
-            .on('dblclick', connectedNodes);
+            .on('dblclick', connectedNodes)
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
 
     node.append('circle')
             .attr('fill',function(d,i){
                 return color(i);
-            }).attr("r", 14);
+            }).attr("r", function(d){
+
+                var i=0;
+                graph.links.forEach(function(d1){
+                    if(d1.target==d){
+                        i++
+                    }
+                    if(d1.source==d){
+                        i++
+                    }
+
+                });
+
+                //console.log(i);
+
+                return 8+i*1.2;
+            });
 
     node.append("text")
             .attr("dx", -6)
@@ -194,6 +239,7 @@
             toggle = 0;
         }
     }
+
 
 
 
