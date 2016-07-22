@@ -67,7 +67,28 @@
             height = 450;
 
     //Set up the colour scale
-    var color = d3.scale.category20();
+    //var color = d3.scale.category20();
+    var color = d3.scale.ordinal()
+            .range(['#1f77b4', '#aec7e8',
+                '#d62728', '#ffbb78',
+                '#2ca02c', '#98df8a',
+                '#ae4362', '#ff9896',
+                '#9467bd', '#c5b0d5',
+                '#8c564b', '#c49c94',
+                '#e377c2', '#f7b6d2',
+                '#7f7f7f', '#c7c7c7',
+                '#bcbd22', '#dbdb8d',
+                '#17becf', '#9edae5',
+
+                '#41B787', '#6352B9',
+                '#B65480', '#D5735A',
+                '#4eb650','#ea532e',
+                '#77bdfe','#4eb650',
+                '#998a84','#4faec4',
+                '#a9069d','#b5611f',
+                    '#817d0b','#ff7f0e'
+
+            ]);
 
     //Set up the force layout
     var force = d3.layout.force()
