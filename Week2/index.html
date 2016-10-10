@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <title>D3</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-
-
-
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
     <link href="css/style-light.css" rel="stylesheet" type="text/css"/>
-    <script src="data/ExcelFormattedGISTEMPDataJS.js"></script>
-    <script src="data/ExcelFormattedGISTEMPData2JS.js"></script>
+    <script src="data/data.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
     <script src="js/d3.js"></script>
@@ -20,15 +16,10 @@
 <div class="widget">
     <div class="header">Temperature Rise (10 Year Mean)</div>
     <div id="chart" class="chart-container">
-
     </div>
 </div>
 
-
 <script type="text/javascript">
-
-
-
 
 
     function getMean(dataPoint,count) {
@@ -36,20 +27,14 @@
         var Glob=[];
 
         for (var i = 0, k = 0; i < data.length; i = i + count, k++) {
-
             var total = 0;
-
             for (var j = 0; j < count; ++j) {
 
                 if (data[i + j] != undefined && data[i + j]['dataPoint'] != "NA") {
-
                     total += data[i + j][dataPoint];
-
                 } else {
                     //console.log(j + i);
                 }
-
-
             }
             if (data[i] != undefined && data[i][dataPoint] != "NA") {
                 if(i<130)
@@ -73,11 +58,6 @@
     var SHem=getMean('SHem',count);
 
     //console.log(Glob);
-
-
-
-
-
 
     var margin = {top: 50, right: 150, bottom: 70, left: 70},
             w = 950 - (margin.left + margin.right),
@@ -119,7 +99,6 @@
             .ticks(5)
             .tickSize(-w, 0, 0)
             .tickFormat("");
-
 
     var svg = d3.select("#chart").append('svg')
             .attr({
@@ -168,7 +147,6 @@
                 class: "y-grid"
             }).call(yGrid);
 
-
     var createGradient=function(svg,color1,color2,id){
 
         var defs = svg.append("defs");
@@ -195,8 +173,6 @@
     createGradient(svg,'#fff','#CBFFDA','line111');
     createGradient(svg,'#fff','#FFDCD4','line211');
     createGradient(svg,'#fff','#C7D1FF','line311');
-   
-
 
     function plotLine(d,d1,className,cirClass,attr){
 
@@ -230,8 +206,6 @@
                     return y(d.val);
                 });
 
-
-
         svg.append('path')
                 .datum(d)
                 .attr({
@@ -246,10 +220,6 @@
                     d: line
                 });
 
-
-
-
-
         svg.selectAll(".dot")
                 .data(d1)
                 .enter().append("circle")
@@ -260,12 +230,9 @@
                 .on("mouseover", function(d) {
                     var div=d3.select('.'+className+'_tt');
 
-
-
                     div.transition()
                             .duration(200)
                             .style("opacity", .9);
-                    //div.classed(className+"_tt",true);
                     div.html("<b>Year : </b>"+d.Year + "<br/>" +"<b>Temp : </b>" + d.val+"F")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY - 50) + "px");
@@ -277,14 +244,12 @@
                     d3.select('.'+className).style("opacity", "1");
                     d3.select('.'+className).style("stroke-width", "2px");
 
-
                     d3.selectAll('.dot1').style("opacity", 0.1);
                     d3.selectAll('.dot2').style("opacity", 0.1);
                     d3.selectAll('.dot3').style("opacity", 0.1);
                     d3.selectAll('.'+cirClass).style("opacity", 1);
 
                     d3.select('.'+className+"0").style("opacity", 1);
-
 
                     area_g.append('path')
                         .datum(d1)
@@ -296,7 +261,6 @@
                         .style({
                             opacity:.5
                         });
-
 
                 })
                 .on("mouseout", function(d) {
@@ -318,22 +282,14 @@
 
                     d3.select('.'+className+"0").style("opacity", 0);
 
-                    //div.classed(className+"_tt",false);
                     area_g.select('.'+className+'11').remove();
 
                 });
-
-
-
     }
 
     plotLine(data,NHem,"line3",'dot3','NHem');
-
     plotLine(data,SHem,"line2",'dot2','SHem');
-
     plotLine(data,Glob,"line1",'dot1','Glob');
-
-
 
     var labels = svg.append('g')
             .attr('class', 'labels');
@@ -359,10 +315,8 @@
             .style({"text-anchor":"end", "font-size":"18px","fill":"#555555"})
             .text("<--      Temperature      -->");
 
-
     var color = d3.scale.ordinal()
             .range(['#008000','#FF0000','#0000FF']);
-
 
     var legendRectSize=10;
     var legendSpacing=7;
@@ -405,6 +359,5 @@
     });
 
 </script>
-
 </body>
 </html>
